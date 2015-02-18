@@ -20,6 +20,29 @@ sum(col)|600|400|1000
 
 Association rule:
 
+```{r results='hide'}
+library(arules)
+
+## Input the data
+data = c(
+    rep(list(c("B", "C")), 400), 
+    rep(list(c("B^c", "C")), 350),
+    rep(list(c("B", "C^c")), 200),
+    rep(list(c("B^c", "C^c")), 50)
+)
+
+## Transform data to `transactions` class
+data = as(data, "transactions")
+
+## Find association rules
+rules = apriori(data, parameter=list(support = 0.1, 
+                                      confidence = 0.1, 
+                                      minlen = 2)) 
+                                      
+inspect(rules)
+inspect(rules[c(5,3)])
+```
+
 1. play basketball => eat-cereal [400/1000 = 0.4, 400/600 = 0.67]
 2. play basketball^c^ => eat-cereal [350/1000 = 0.35, 50/400 = 0.88]
 
@@ -28,5 +51,36 @@ Implies a misleading association rule.
 -----
 
 ### Lecture 4.2. Pattern Evaluation: Interestingness Measures: Lift and χ2
-> Lift
-$lift
+> Lift: $lift(x, y) = confidence (x, y) / support(x, y) = s(x U y)/ s(x) X s(y)$ 
+> Measured the correlation of a single cell in contingency table (/2-way table)
+
+> Result interpretation: 
+> * =1: indepedent
+> * >1: positive correlated
+> * <1: negative correlated
+
+Following the example in lecture 4.1:
+
+```{r}
+inspect(rules[c(5,2)])
+```
+
+1. lift(B, C) = 400/1000 / (600/1000 X 750/1000) = 0.89
+2. lift(B, C^c^) = 200/1000 / (600/1000 X 250/1000) = 1.33
+
+> Chi-square: $\chi^2 = \sum ((observed-expected)^2/ expected)$
+> $expected = \sum(row)*\sum(col)/ \sum(total)$
+> Measured the correlation of the whole table
+
+> Result interpretation: 
+> * =0: indepedent
+> * >0 and obs>exp: positive correlated
+> * >0 and obs<exp: negative correlated
+
+```{r}
+chiSq = interestMeasure(rules[1],  "chiSquare", transactions = data)
+chiSq
+```
+
+Following the example in lecture 4.1:
+$\chi^2 = (400-450)^2/450 +...+ (50-100)^2/100 = `chiSq`$
