@@ -83,4 +83,4 @@ chiSq
 ```
 
 Following the example in lecture 4.1:
-$\chi^2 = (400-450)^2/450 +...+ (50-100)^2/100 = `chiSq`$
+$\chi^2 = (400-450)^2/450 +...+ (50-100)^2/100 = `r chiSq`$
