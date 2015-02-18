@@ -24,11 +24,12 @@ Association rule:
 library(arules)
 
 ## Input the data
+obs = c(400, 350, 200, 50)
 data = c(
-    rep(list(c("B", "C")), 400), 
-    rep(list(c("B^c", "C")), 350),
-    rep(list(c("B", "C^c")), 200),
-    rep(list(c("B^c", "C^c")), 50)
+    rep(list(c("B", "C")), obs[1]), 
+    rep(list(c("B^c", "C")), obs[2]),
+    rep(list(c("B", "C^c")), obs[3]),
+    rep(list(c("B^c", "C^c")), obs[4])
 )
 
 ## Transform data to `transactions` class
