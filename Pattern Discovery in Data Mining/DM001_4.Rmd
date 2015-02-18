@@ -1,0 +1,32 @@
+---
+title: "DM001-4"
+author: "Becky Mak"
+date: "Wednesday, February 18, 2015"
+output: html_document
+---
+##001. Pattern Discovery in Data Mining
+###Week2
+
+###Lecture 4.1: Pattern Evaluation: Limitation of the Support-Confidence Framework
+> Support and Confidence alone may not fully describe the interestingness of the association rule.
+
+Example: 
+
+|Play basketball|Not play basketball|sum(row)
+---|---|---|---
+Eat cereal|400|350|750
+Not eat cereal|200|50|250
+sum(col)|600|400|1000
+
+Association rule:
+
+1. play basketball => eat-cereal [400/1000 = 0.4, 400/600 = 0.67]
+2. play basketball^c^ => eat-cereal [350/1000 = 0.35, 50/400 = 0.88]
+
+Implies a misleading association rule.
+
+-----
+
+### Lecture 4.2. Pattern Evaluation: Interestingness Measures: Lift and χ2
+> Lift
+$lift
