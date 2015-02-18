@@ -80,6 +80,12 @@ inspect(rules[c(5,2)])
 ```{r}
 chiSq = interestMeasure(rules[1],  "chiSquare", transactions = data)
 chiSq
+
+## Another method using formula calculation:
+obs = c(400, 350, 200, 50)
+exp = c(750*600, 750*400, 250*600, 250*400)/sum(obs)
+
+sum((obs-exp)^2/exp)
 ```
 
 Following the example in lecture 4.1:
