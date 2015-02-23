@@ -71,6 +71,32 @@ But the above definition will not be correct when null transcations are dominant
 > (P(A|B) + P(B|A))/2 < є, where є is a negative pattern threshold, 
 > then A and B are negatively correlated
 
+Example:
+Situation 1
+|A|A^c|sum(row)
+B|1|99|100
+B^c|99|1|100
+sum(col)|100|100|200
+
+*Support-based*:
+sup(A U B) = 1/200 = 0.005
+sup(A) X sup(B) = 100/200 * 100/200 = 0.25 >> sup(A U B) 
+
+*Kulczynski*:
+1/2*(P(A|B)+P(B|A)) = 1/2*(1/100+1/100) = 0.01 < 0.02 =eplison
+
+Situation 2
+|A|A^c|sum(row)
+B|1|-|100
+B^c|-|-|-
+sum(col)|100|-|10^5
+
+*Support-based*:
+sup(A U B) = 1/10^5 = 10^-5
+sup(A) X sup(B) = 100/10^5 * 100/10^5 = 10^-6 < sup(A U B) 
+
+*Kulczynski*:
+1/2*(P(A|B)+P(B|A)) = 1/2*(1/100+1/100) = 0.01 < 0.02 =eplison
 ---
 
 ### Lecture 5.5: Mining Compressed Patterns
