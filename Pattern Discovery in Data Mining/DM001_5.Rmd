@@ -90,8 +90,11 @@ P5 |{39,16,18,12} |161576
 > Dist(P1, P2) = 1−|T(P1)∩T(P2)||T(P1)∪T(P2)| where T(P1) is the set of transaction containg P1
 
 Example:
+
 |T(P1)∩T(P2)| = transaction holding **both** patterns = T(P2)
+
 |T(P1)∪T(P2)| = transaction holding **at least one** of the patterns = T(P1)
+
 Dist (P1, P2) = 1- T(P2)/T(P1) = 1-205211/205227 = 1-0.9999
 
 [Forum post: Looking for example of how to calculate delta cover?]
