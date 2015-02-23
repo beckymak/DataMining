@@ -79,3 +79,20 @@ But the above definition will not be correct when null transcations are dominant
 > For each pattern P, find all patterns
 > which can be expressed by P and whose distance to P is within δ (δ-cover)
 
+Pat-ID |Item-Sets|Support
+---|---|---
+P1 |{38,16,18,12} |205227
+P2 |{38,16,18,12,17} |205211
+P3 |{39,38,16,18,12,17} |101758
+P4 |{39,16,18,12,17} |161563
+P5 |{39,16,18,12} |161576
+
+> Dist(P1, P2) = 1−|T(P1)∩T(P2)||T(P1)∪T(P2)| where T(P1) is the set of transaction containg P1
+
+Example:
+|T(P1)∩T(P2)| = transaction holding **both** patterns = T(P2)
+|T(P1)∪T(P2)| = transaction holding **at least one** of the patterns = T(P1)
+Dist (P1, P2) = 1- T(P2)/T(P1) = 1-205211/205227 = 1-0.9999
+
+[Forum post: Looking for example of how to calculate delta cover?]
+(https://class.coursera.org/patterndiscovery-001/forum/thread?thread_id=1769)
