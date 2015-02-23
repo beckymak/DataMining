@@ -1,0 +1,24 @@
+---
+title: "DM001-5"
+author: "Becky Mak"
+date: "Monday, February 23, 2015"
+output: html_document
+---
+##001. Pattern Discovery in Data Mining
+###Week2: Lecture 5. Mining Diverse Patterns
+
+###Lecture 5.1: Mining Multi-Level Associations
+
+Items often form hierarchies, to set the min-support thresolds:
+* Uniform min-support: same min-support for all levels
+* Level-reduced min-support: items at the lower level have lower support
+
+Redundant rule: A rule is *redundant* if:
+ * Support close to the expected value according to its 'ancestor' rule, and
+ * Confidence is similar to its 'ancestor' rule.
+
+Group-based 'individualized' min-support:
+ * customeized min-support for different kinds of items
+ 
+ ---
+ 
