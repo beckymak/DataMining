@@ -37,3 +37,19 @@ Attributes:
    + discretization (Lecture 5.3)
    + clustering
    + gradient approaches 
+
+---
+
+###Leture 5.3:  Mining Quantitative Associations
+
+Discretization (divide numerical attributes in groups)
+ * Static discretization (based on pre-defined concept hierarchies)
+   + Data cube-based aggregation
+ * Dynamic discretization (based on data distribution)
+ * Clustering (based on distance association)
+   + First one-dimensional clustering, then association
+ * Deviation analysis (if a subrules has an extraordinary behaviour)
+   + *A subset of the population* => *Extraordinary behaviour of this subset*
+   + the rule is accepted only if a statistical test shows significance difference
+
+---
