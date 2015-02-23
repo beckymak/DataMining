@@ -54,7 +54,7 @@ Discretization (divide numerical attributes in groups)
 
 ---
 
-### Leture 5.4: Mining Negative Correlations
+### Lecture 5.4: Mining Negative Correlations
 Rare patterns (very low support but interesting):
  * Setting individualized, group-based min-support thresholds for different groups of items
 
@@ -72,3 +72,10 @@ But the above definition will not be correct when null transcations are dominant
 > then A and B are negatively correlated
 
 ---
+
+### Lecture 5.5: Mining Compressed Patterns
+
+> *δ-clustering*: 
+> For each pattern P, find all patterns
+> which can be expressed by P and whose distance to P is within δ (δ-cover)
+
