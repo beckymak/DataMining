@@ -22,3 +22,18 @@ Group-based 'individualized' min-support:
  
  ---
  
+###Leture 5.2: Mining MultiDimensional Associations
+ 
+Multi-dimensional rules (items in >= 2 dimensions or predicates):
+ * Inter-dimension asscociation rules (no repated predicates)
+   + age(X, '18-25') AND occupation(X, 'student') => buys(X, 'coke')
+ * Hybrid-dimension association rules (repeated predicates)
+   + age(X, '18-25') AND buys(X, 'popcorn')       => buys(X, 'coke')
+
+Attributes:
+ * Categorical attributes (no ordering among value)
+   + data cube for inter-dimension association
+ * Quantitative attributes (numeric, implicit ordering among value)
+   + discretization (Lecture 5.3)
+   + clustering
+   + gradient approaches 
