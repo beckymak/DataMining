@@ -53,3 +53,22 @@ Discretization (divide numerical attributes in groups)
    + the rule is accepted only if a statistical test shows significance difference
 
 ---
+
+### Leture 5.4: Mining Negative Correlations
+Rare patterns (very low support but interesting):
+ * Setting individualized, group-based min-support thresholds for different groups of items
+
+Negative patterns (negative corrleated):
+
+> *Support-based definition*: 
+> If itemsets A and B are both frequent but rarely occur together, 
+> i.e.,sup(A U B) << sup (A) × sup(B)
+
+But the above definition will not be correct when null transcations are dominant.
+
+> *Kulczynski measure-based definition*: 
+> If itemsets A and B are frequent but 
+> (P(A|B) + P(B|A))/2 < є, where є is a negative pattern threshold, 
+> then A and B are negatively correlated
+
+---
