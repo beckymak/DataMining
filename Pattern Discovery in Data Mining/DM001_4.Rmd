@@ -24,17 +24,20 @@ Association rule:
 library(arules)
 
 ## Input the data
-obs = c(400, 350, 200, 50)
-data = c(
-    rep(list(c("B", "C")), obs[1]), 
-    rep(list(c("B^c", "C")), obs[2]),
-    rep(list(c("B", "C^c")), obs[3]),
-    rep(list(c("B^c", "C^c")), obs[4])
-)
+item = list(c("B","C"), 
+            c("B^c","C"),
+            c("B", "C^c"),
+            c("B^c", "C^c")
+            )
+
+support = c(400, 350, 200, 50)
+data = rep(item, support)
 
 ## Transform data to `transactions` class
 data = as(data, "transactions")
+```
 
+```{r}
 ## Find association rules
 rules = apriori(data, parameter=list(support = 0.1, 
                                       confidence = 0.1, 
