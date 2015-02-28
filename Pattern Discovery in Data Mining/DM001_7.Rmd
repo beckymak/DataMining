@@ -1,0 +1,18 @@
+
+Copied from library(arulesSequences) example to convert data into sequence
+```{r}
+library(arules)
+library(arulesSequences)
+
+## 3 example sequences
+x <- list("01" = list(c("A","B"), "C"),
+"02" = list("C"),
+"03" = list("B", "B"))
+## coerce
+s <- as(x, "sequences")
+as(s, "data.frame")
+## get reference set
+as(itemsets(s), "data.frame")
+
+
+```
