@@ -74,11 +74,13 @@ But the above definition will not be correct when null transcations are dominant
 Example:
 Situation 1
 
--|A|A^c|sum(row)
+
+-|A|A^c^|sum(row)
 ---|---|---|---
 B|1|99|100
-B^c|99|1|100
+B^c^|99|1|100
 sum(col)|100|100|200
+
 
 *Support-based*:
 
@@ -92,11 +94,11 @@ sup(A) X sup(B) = 100/200 * 100/200 = 0.25 >> sup(A U B)
 
 Situation 2
 
--|A|A^c|sum(row)
+-|A|A^c^|sum(row)
 ---|---|---|---
 B|1|-|100
-B^c|-|-|-
-sum(col)|100|-|10^5
+B^c^|-|-|-
+sum(col)|100|-|10^5^
 
 *Support-based*:
 
