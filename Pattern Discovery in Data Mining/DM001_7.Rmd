@@ -14,5 +14,29 @@ as(s, "data.frame")
 ## get reference set
 as(itemsets(s), "data.frame")
 
+```
 
+```{r}
+library(arules)
+library(arulesSequences)
+
+list1 = c("a.bc.de.c.f","a.bd.bc.e.f")
+list2 = unlist(lapply(list1, strsplit, split="[.]"),recursive=FALSE)
+list3 = lapply(list2, as.list)
+
+
+library(reshape2)
+data = dcast(cbind(
+  coln = sequence(rapply(list3, length)), 
+  melt(list3)), L1 + L2 ~ coln, 
+  value.var = "value")
+names(data) = c("sequenceID", "eventID", "items")
+
+data$SIZE = lapply(data$items, nchar)
+data = data[,c("items", "sequenceID","eventID","SIZE")]
+
+data=apply(data, 1, paste0, sep=",")
+cat(data, file = "tfile", sep = "\n")
+readLines("tfile")
+test = read_baskets(tfile, sep = ",",info =  c("sequenceID","eventID","size"))
 ```
