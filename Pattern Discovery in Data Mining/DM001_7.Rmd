@@ -1,6 +1,11 @@
-
+---
+title: "DM001-7"
+author: "Becky Mak"
+date: "Monday, February 23, 2015"
+output: html_document
+---
 Copied from library(arulesSequences) example to convert data into sequence
-```{r}
+```{r echo=FALSE}
 library(arules)
 library(arulesSequences)
 
@@ -16,11 +21,13 @@ as(itemsets(s), "data.frame")
 
 ```
 
-```{r}
+```{r echo=FALSE}
 library(arules)
 library(arulesSequences)
 
-list1 = c("a.bc.de.c.f","a.bd.bc.e.f")
+list1 = c("bd.c.b.ac","bf.ce.b.fg",
+          "ah.bf.a.b.f","be.ce.d",
+          "a.bd.b.c.b.ade")
 list2 = unlist(lapply(list1, strsplit, split="[.]"),recursive=FALSE)
 list3 = lapply(list2, as.list)
 
@@ -41,10 +48,15 @@ items_col = data.frame(t(do.call(cbind, items_list)))
 
 data = cbind(data[,c(2:4)], items_col)
 
-write.table(data, file="tfile", sep=",", row.names=FALSE, col.names=FALSE, na="")
-trans = read_baskets("tfile", sep = ",",info =  c("sequenceID","eventID","size"))
+#write.table(data, file="dm_001_7_2.txt", sep="\t", row.names=FALSE, col.names=FALSE, na="")
+```
+```{r}
+library(arules)
+library(arulesSequences)
+trans = read_baskets("dm_001_7_2.txt", sep = "\t",info =  c("sequenceID","eventID","size"))
 inspect(trans)
 as(trans, "transactions")
-rules = cspade(trans, parameter=list(support=0.5),control = list(verbose = TRUE))
-summary(rules)
+closed = apriori(trans)  ## not ok yet
+inspect(closed)
+
 ```
