@@ -1,0 +1,96 @@
+---
+title: "DM001-4"
+author: "Becky Mak"
+date: "Wednesday, February 18, 2015"
+output: html_document
+---
+##001. Pattern Discovery in Data Mining
+###Week2
+
+###Lecture 4.1: Pattern Evaluation: Limitation of the Support-Confidence Framework
+> Support and Confidence alone may not fully describe the interestingness of the association rule.
+
+Example: 
+
+|Play basketball|Not play basketball|sum(row)
+---|---|---|---
+Eat cereal|400|350|750
+Not eat cereal|200|50|250
+sum(col)|600|400|1000
+
+Association rule:
+
+```{r results='hide'}
+library(arules)
+
+## Input the data
+item = list(c("B","C"), 
+            c("B^c","C"),
+            c("B", "C^c"),
+            c("B^c", "C^c")
+            )
+
+support = c(400, 350, 200, 50)
+data = rep(item, support)
+
+## Transform data to `transactions` class
+data = as(data, "transactions")
+```
+
+```{r}
+## Find association rules
+rules = apriori(data, parameter=list(support = 0.1, 
+                                      confidence = 0.1, 
+                                      minlen = 2)) 
+                                      
+inspect(rules)
+inspect(rules[c(5,3)])
+```
+
+1. play basketball => eat-cereal [400/1000 = 0.4, 400/600 = 0.67]
+2. play basketball^c^ => eat-cereal [350/1000 = 0.35, 50/400 = 0.88]
+
+Implies a misleading association rule.
+
+-----
+
+### Lecture 4.2. Pattern Evaluation: Interestingness Measures: Lift and χ2
+> Lift: $lift(x, y) = confidence (x, y) / support(x, y) = s(x U y)/ s(x) X s(y)$ 
+> Measured the correlation of a single cell in contingency table (/2-way table)
+
+> Result interpretation: 
+> * =1: indepedent
+> * >1: positive correlated
+> * <1: negative correlated
+
+Following the example in lecture 4.1:
+
+```{r}
+inspect(rules[c(5,2)])
+```
+
+1. lift(B, C) = 400/1000 / (600/1000 X 750/1000) = 0.89
+2. lift(B, C^c^) = 200/1000 / (600/1000 X 250/1000) = 1.33
+
+> Chi-square: $\chi^2 = \sum ((observed-expected)^2/ expected)$
+> $expected = \sum(row)*\sum(col)/ \sum(total)$
+> Measured the correlation of the whole table
+
+> Result interpretation: 
+> * =0: indepedent
+> * >0 and obs>exp: positive correlated
+> * >0 and obs<exp: negative correlated
+
+```{r}
+chiSq = interestMeasure(rules[1],  "chiSquare", transactions = data)
+chiSq
+
+## Another method using formula calculation:
+obs = c(400, 350, 200, 50)
+exp = c(750*600, 750*400, 250*600, 250*400)/sum(obs)
+
+sum((obs-exp)^2/exp)
+```
+
+Following the example in lecture 4.1:
+$\chi^2 = (400-450)^2/450 +...+ (50-100)^2/100 = `r chiSq`$

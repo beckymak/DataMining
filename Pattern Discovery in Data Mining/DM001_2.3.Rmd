@@ -1,0 +1,58 @@
+---
+title: "DM001-2.3"
+author: "Becky Mak"
+date: "Monday, February 16, 2015"
+output: html_document
+---
+##001. Pattern Discovery in Data Mining
+###Week1
+
+###Lecture 2.3: Pattern Discovery Basic Concepts: Compressed Representation: Closed Patterns and Max-Patterns
+
+Preparing the data
+```{r results='hide'}
+library(arules)
+## Input the data
+data = list(
+  c(1:50),
+  c(1:100)
+)
+## Transform data to `transactions` class
+data = as(data, "transactions")
+
+```
+
+
+Example: Find closed pattern itemsets
+
+
+>Closed patterns: [*Definition from slide (p.3)*]
+
+>A pattern (itemset) X is closed if X is frequent, and there exists 
+>no super-pattern Y כ X, with the same support as X 
+```
+
+```{r results='hide'}
+## find all closed frequent itemsets
+closed <- apriori(data, parameter = list(target = "closed", minlen = 1))
+```
+```{r}
+## Show the result
+inspect(closed)
+```
+
+Example: Find maximal pattern itemsets
+
+>Max-Patterns: [*Definition from slide (p.4)*]
+
+>A pattern X is a max-pattern if X is frequent
+>and there exists no frequent super-pattern Y כ X 
+
+```{r results='hide'}
+maximal <- apriori(data, parameter = list(target = "maximally frequent itemsets", minlen = 1))
+
+```
+
+```{r}
+inspect(maximal)
+```

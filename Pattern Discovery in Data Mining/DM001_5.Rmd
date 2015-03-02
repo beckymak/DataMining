@@ -1,0 +1,138 @@
+---
+title: "DM001-5"
+author: "Becky Mak"
+date: "Monday, February 23, 2015"
+output: html_document
+---
+##001. Pattern Discovery in Data Mining
+###Week2: Lecture 5. Mining Diverse Patterns
+
+###Lecture 5.1: Mining Multi-Level Associations
+
+Items often form hierarchies, to set the min-support thresolds:
+* Uniform min-support: same min-support for all levels
+* Level-reduced min-support: items at the lower level have lower support
+
+Redundant rule: A rule is *redundant* if:
+ * Support close to the expected value according to its 'ancestor' rule, and
+ * Confidence is similar to its 'ancestor' rule.
+
+Group-based 'individualized' min-support:
+ * customeized min-support for different kinds of items
+ 
+ ---
+ 
+###Leture 5.2: Mining MultiDimensional Associations
+ 
+Multi-dimensional rules (items in >= 2 dimensions or predicates):
+ * Inter-dimension asscociation rules (no repated predicates)
+   + age(X, '18-25') AND occupation(X, 'student') => buys(X, 'coke')
+ * Hybrid-dimension association rules (repeated predicates)
+   + age(X, '18-25') AND buys(X, 'popcorn')       => buys(X, 'coke')
+
+Attributes:
+ * Categorical attributes (no ordering among value)
+   + data cube for inter-dimension association
+ * Quantitative attributes (numeric, implicit ordering among value)
+   + discretization (Lecture 5.3)
+   + clustering
+   + gradient approaches 
+
+---
+
+###Leture 5.3:  Mining Quantitative Associations
+
+Discretization (divide numerical attributes in groups)
+ * Static discretization (based on pre-defined concept hierarchies)
+   + Data cube-based aggregation
+ * Dynamic discretization (based on data distribution)
+ * Clustering (based on distance association)
+   + First one-dimensional clustering, then association
+ * Deviation analysis (if a subrules has an extraordinary behaviour)
+   + *A subset of the population* => *Extraordinary behaviour of this subset*
+   + the rule is accepted only if a statistical test shows significance difference
+
+---
+
+### Lecture 5.4: Mining Negative Correlations
+Rare patterns (very low support but interesting):
+ * Setting individualized, group-based min-support thresholds for different groups of items
+
+Negative patterns (negative corrleated):
+
+> *Support-based definition*: 
+> If itemsets A and B are both frequent but rarely occur together, 
+> i.e.,sup(A U B) << sup (A) × sup(B)
+
+But the above definition will not be correct when null transcations are dominant.
+
+> *Kulczynski measure-based definition*: 
+> If itemsets A and B are frequent but 
+> (P(A|B) + P(B|A))/2 < є, where є is a negative pattern threshold, 
+> then A and B are negatively correlated
+
+Example:
+Situation 1
+
+-|A|A^c|sum(row)
+---|---|---|---
+B|1|99|100
+B^c|99|1|100
+sum(col)|100|100|200
+
+*Support-based*:
+
+sup(A U B) = 1/200 = 0.005
+
+sup(A) X sup(B) = 100/200 * 100/200 = 0.25 >> sup(A U B) 
+
+*Kulczynski*:
+
+1/2*(P(A|B)+P(B|A)) = 1/2*(1/100+1/100) = 0.01 < 0.02 =eplison
+
+Situation 2
+
+-|A|A^c|sum(row)
+---|---|---|---
+B|1|-|100
+B^c|-|-|-
+sum(col)|100|-|10^5
+
+*Support-based*:
+
+sup(A U B) = 1/10^5 = 10^-5
+
+sup(A) X sup(B) = 100/10^5 * 100/10^5 = 10^-6 < sup(A U B) 
+
+*Kulczynski*:
+
+1/2*(P(A|B)+P(B|A)) = 1/2*(1/100+1/100) = 0.01 < 0.02 =eplison
+
+---
+
+### Lecture 5.5: Mining Compressed Patterns
+
+> *δ-clustering*: 
+> For each pattern P, find all patterns
+> which can be expressed by P and whose distance to P is within δ (δ-cover)
+
+Pat-ID |Item-Sets|Support
+---|---|---
+P1 |{38,16,18,12} |205227
+P2 |{38,16,18,12,17} |205211
+P3 |{39,38,16,18,12,17} |101758
+P4 |{39,16,18,12,17} |161563
+P5 |{39,16,18,12} |161576
+
+> Dist(P1, P2) = 1−|T(P1)∩T(P2)||T(P1)∪T(P2)| where T(P1) is the set of transaction containg P1
+
+Example:
+
+|T(P1)∩T(P2)| = transaction holding **both** patterns = T(P2)
+
+|T(P1)∪T(P2)| = transaction holding **at least one** of the patterns = T(P1)
+
+Dist (P1, P2) = 1- T(P2)/T(P1) = 1-205211/205227 = 1-0.9999
+
+[Forum post: Looking for example of how to calculate delta cover?]
+(https://class.coursera.org/patterndiscovery-001/forum/thread?thread_id=1769)

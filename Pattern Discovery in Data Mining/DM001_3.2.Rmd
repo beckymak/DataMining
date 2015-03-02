@@ -1,0 +1,37 @@
+---
+title: "DM001-3.2"
+author: "Becky Mak"
+date: "Monday, February 16, 2015"
+output: html_document
+---
+##001. Pattern Discovery in Data Mining
+###Week1
+
+###Lecture 3.2: Efficient Pattern Mining Methods: The Apriori Algorithm
+
+Preparing the data
+```{r results='hide'}
+library(arules)
+## Input the data
+data = list(
+  c("A", "C", "D"),
+  c("B", "C", "E"),
+  c("A", "B", "C", "E"),
+  c("B", "E")
+)
+
+## Transform data to `transactions` class
+data = as(data, "transactions")
+
+```
+
+Example: The Apriori Algorithm
+
+```{r results='hide'}
+## find the apriori itemsets with minsup = 2
+freqset <- apriori(data, parameter = list(support = 0.5))
+```
+```{r}
+## Show the result
+inspect(freqset)
+```
