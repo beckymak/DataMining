@@ -24,7 +24,6 @@ list1 = c("a.bc.de.c.f","a.bd.bc.e.f")
 list2 = unlist(lapply(list1, strsplit, split="[.]"),recursive=FALSE)
 list3 = lapply(list2, as.list)
 
-
 library(reshape2)
 data = dcast(cbind(
   coln = sequence(rapply(list3, length)), 
@@ -32,10 +31,9 @@ data = dcast(cbind(
   value.var = "value")
 names(data) = c("sequenceID", "eventID", "items")
 
-data$SIZE = lapply(data$items, nchar)
+data$SIZE = as.integer(lapply(data$items, nchar))
 data = data[,c("items", "sequenceID","eventID","SIZE")]
 
-## spliting item basket, not finish
 items = strsplit(data$items, split="")
 ncol = max(sapply(items,length))
 items_list = lapply(items, function(x) c(x, rep(NA, ncol - length(x))))
@@ -46,4 +44,7 @@ data = cbind(data[,c(2:4)], items_col)
 write.table(data, file="tfile", sep=",", row.names=FALSE, col.names=FALSE, na="")
 trans = read_baskets("tfile", sep = ",",info =  c("sequenceID","eventID","size"))
 inspect(trans)
+as(trans, "transactions")
+rules = cspade(trans, parameter=list(support=0.5),control = list(verbose = TRUE))
+summary(rules)
 ```
