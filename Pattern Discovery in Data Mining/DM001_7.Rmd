@@ -35,8 +35,15 @@ names(data) = c("sequenceID", "eventID", "items")
 data$SIZE = lapply(data$items, nchar)
 data = data[,c("items", "sequenceID","eventID","SIZE")]
 
-data=apply(data, 1, paste0, sep=",")
-cat(data, file = "tfile", sep = "\n")
-readLines("tfile")
-test = read_baskets(tfile, sep = ",",info =  c("sequenceID","eventID","size"))
+## spliting item basket, not finish
+items = strsplit(data$items, split="")
+ncol = max(sapply(items,length))
+items_list = lapply(items, function(x) c(x, rep(NA, ncol - length(x))))
+items_col = data.frame(t(do.call(cbind, items_list)))
+
+data = cbind(data[,c(2:4)], items_col)
+
+write.table(data, file="tfile", sep=",", row.names=FALSE, col.names=FALSE, na="")
+trans = read_baskets("tfile", sep = ",",info =  c("sequenceID","eventID","size"))
+inspect(trans)
 ```
