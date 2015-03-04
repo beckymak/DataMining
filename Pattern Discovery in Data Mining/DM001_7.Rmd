@@ -51,13 +51,26 @@ data = cbind(data[,c(2:4)], items_col)
 #write.table(data, file="dm_001_7_2.txt", sep="\t", row.names=FALSE, col.names=FALSE, na="")
 ```
 ```{r}
+library(RCurl)
+path = getURL("https://raw.githubusercontent.com/beckymak/DataMining/master/Pattern%20Discovery%20in%20Data%20Mining/dm_001_7_2.txt")
+
+zz <- file("test")  
+cat(path, file = zz, sep = "")
+
 library(arules)
 library(arulesSequences)
-trans = read_baskets("dm_001_7_2.txt", sep = "\t",info =  c("sequenceID","eventID","size"))
+
+trans = read_baskets(zz, sep = "\t",info =  c("sequenceID","eventID","size"))
 inspect(trans)
 as(trans, "transactions")
-closed = apriori(trans)  ## not ok yet
-inspect(closed)
+#closed = cspade(trans)  ## not ok yet
+#inspect(closed)
+
+s1 = apriori(trans, parameter = list(confidence=0.2))
+#s1 = cspade(trans, parameter = list(support = 0.4),control = list(verbose = TRUE))
+#summary(s1)
+itemFrequency(trans,itemsets=TRUE)
+
 
 ```
 
