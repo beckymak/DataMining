@@ -22,15 +22,11 @@ as(itemsets(s), "data.frame")
 ```
 
 ```{r echo=FALSE}
-library(arules)
-library(arulesSequences)
-
 list1 = c("bd.c.b.ac","bf.ce.b.fg",
           "ah.bf.a.b.f","be.ce.d",
           "a.bd.b.c.b.ade")
 list2 = unlist(lapply(list1, strsplit, split="[.]"),recursive=FALSE)
 list3 = lapply(list2, as.list)
-
 library(reshape2)
 data = dcast(cbind(
   coln = sequence(rapply(list3, length)), 
@@ -43,7 +39,7 @@ data = data[,c("items", "sequenceID","eventID","SIZE")]
 
 items = strsplit(data$items, split="")
 ncol = max(sapply(items,length))
-items_list = lapply(items, function(x) c(x, rep(NA, ncol - length(x))))
+items_list = lapply(items, function(x) paste(x , collapse=" "))
 items_col = data.frame(t(do.call(cbind, items_list)))
 
 data = cbind(data[,c(2:4)], items_col)
